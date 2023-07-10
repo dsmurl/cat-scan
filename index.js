@@ -158,4 +158,4 @@ Object.keys(scanObject).forEach((tag) => {
   });
 });
 
-printLine(`...Done`, COLORS.bright, 2);
+printLine(`... Done`, COLORS.bright, 2);
