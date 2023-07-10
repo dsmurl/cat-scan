@@ -1,0 +1,24 @@
+{
+  "name": "cat-scan",
+  "version": "1.0.0",
+  "description": "Digs through your code base for notes you placed.  Helps sort and categorize your notes by tag.",
+  "bin": {
+    "cat-scan": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsmurl/cat-scan.git"
+  },
+  "author": "dsmurl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dsmurl/cat-scan/issues"
+  },
+  "homepage": "https://github.com/dsmurl/cat-scan#readme",
+  "dependencies": {
+    "commander": "^11.0.0"
+  }
+}
