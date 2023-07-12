@@ -1,6 +1,6 @@
 {
   "name": "cat-scan",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Digs through your code base for notes you placed.  Helps sort and categorize your notes by tag.",
   "bin": {
     "cat-scan": "index.js"
