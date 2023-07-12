@@ -44,8 +44,6 @@ try {
   exit();
 }
 
-printLine(`Cat Scanning "${dir}" ...`, COLORS.bright, 2);
-
 const scanObject = { general: [] };
 
 function searchDirectory(directory, searchString) {
@@ -157,5 +155,3 @@ Object.keys(scanObject).forEach((tag) => {
     );
   });
 });
-
-printLine(`... Done`, COLORS.bright, 2);
