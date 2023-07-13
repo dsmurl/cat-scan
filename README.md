@@ -77,6 +77,27 @@ $ node index.js -s
 | -v, --version         | Shows cat-scan version number                              |         |
 | -h, --help            | Shows an options list                                      |         |
 
+### Config file
+
+You can add a config file named `.cat-scan-config.json` into your home dir and define a couple of useful things.
+
+| Key     | Effect                                                                                      |
+| :------ | :------------------------------------------------------------------------------------------ |
+| skip    | An array of string file/dir names to be skipped by cat-scan                                 |
+| maxSize | A new global default maxSize. Command line --maxSize will override the value in this config |
+
+<pre>
+{
+	"skip": [
+		".solid",
+        ".next",
+        "python-output",
+        "some-db-dir"
+    ],
+	"maxSize": 73
+}
+</pre>
+
 ### The Code
 
 Don't read the code. It was written in one night and it sucks alright.

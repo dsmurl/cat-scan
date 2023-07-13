@@ -4,6 +4,7 @@ const path = require("path");
 const commander = require("commander");
 
 const fs = require("fs");
+const os = require("os");
 const { COLORS, printLine } = require("./utils/printUtils.js");
 const { exit } = require("process");
 
@@ -28,11 +29,35 @@ commander
   )
   .parse(process.argv);
 
+// Read in the cat-scan-config.json file
+const homeDir = os.homedir();
+const configFile = `${homeDir}/.cat-scan-config.json`;
+let config = {};
+
+if (fs.existsSync(configFile)) {
+  try {
+    const data = fs.readFileSync(configFile, "utf8");
+
+    config = JSON.parse(data);
+  } catch (err) {
+    console.error(`Error reading the config file (${configFile}):`, err);
+  }
+}
+
 const options = commander.opts();
 const dir = options.dir || ".";
-const skipDirs = ["node_modules", ".git"];
-const skipAt = parseInt(options.maxSize) || 50;
-const skipTagName = `>${skipAt}k-too-big-skipped`;
+const configSkip = config.skip || [];
+const skipDirs = [
+  "node_modules",
+  ".git",
+  ".solid",
+  ".next",
+  "build",
+  "dist",
+  ...configSkip,
+];
+const maxSize = parseInt(options.maxSize) || config.maxSize || 50;
+const skipTagName = `>${maxSize}k-too-big-skipped`;
 
 try {
   if (!fs.existsSync(dir)) {
@@ -71,7 +96,7 @@ function searchDirectory(directory, searchString) {
     } else {
       const fileSizeInKBytes = Math.round((stats.size / 1024) * 10) / 10;
 
-      if (fileSizeInKBytes > skipAt && options.skipped) {
+      if (fileSizeInKBytes > maxSize) {
         if (!scanObject[skipTagName]) {
           scanObject[skipTagName] = [];
         }
@@ -133,7 +158,10 @@ const searchString = searchTerms[0]; // Replace with the string you want to sear
 searchDirectory(directory, searchString);
 
 Object.keys(scanObject).forEach((tag) => {
-  if (scanObject[tag].length === 0) {
+  if (
+    scanObject[tag].length === 0 ||
+    (tag === skipTagName && !options.skipped)
+  ) {
     return;
   }
 
